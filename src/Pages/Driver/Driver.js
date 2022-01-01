@@ -74,13 +74,13 @@ const Driver = () => {
             <form onSubmit={handleByAgeSearch}>
                 <TextField
                     sx={{ width: "30%", m: 1 }}
-                    label="Search"
+                    label="Minimum_age"
                     name="minimum_age"
                     onBlur={handleOnBlur}
                     variant="outlined" />
                 <TextField
                     sx={{ width: "30%", m: 1 }}
-                    label="Search"
+                    label="Maximum_age"
                     name="maximum_age"
                     onBlur={handleOnBlur}
                     variant="outlined" />

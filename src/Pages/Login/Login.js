@@ -30,6 +30,8 @@ const Login = () => {
         <div>
             <Navber></Navber>
             <h1>Please Login</h1>
+            <p>Loogin in with:</p>
+            <small>Email: admin@admin.com; Password: abcd1234</small>
             <form onSubmit={handleLoginSubmit}>
                 <TextField
                     sx={{ width: '50%', m: 1 }}
