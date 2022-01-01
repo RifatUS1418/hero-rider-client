@@ -1,6 +1,7 @@
 import { TextField, Button, Input, CircularProgress, Alert } from '@mui/material';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Navber from '../../Shared/Navber/Navber';
 import useAuth from './../../hooks/useAuth';
 
 const RegisterLearner = () => {
@@ -18,6 +19,7 @@ const RegisterLearner = () => {
     const [rePassword, setRePassword] = useState('');
     const [profileImage, setProfileImage] = useState(null);
     const [nidImage, setNIDImage] = useState(null);
+    const catagory = 'learner';
 
 
     const handleRegisterSubmit = e => {
@@ -26,8 +28,6 @@ const RegisterLearner = () => {
             alert('Your password did not match');
             return;
         }
-
-        registerUser(email, password, name, navigate);
 
 
         if (!nidImage) {
@@ -40,32 +40,40 @@ const RegisterLearner = () => {
         formData.append('address', address);
         formData.append('phone', phone);
         formData.append('vehicle', vehicle);
+        formData.append('catagory', catagory);
         formData.append('password', password);
         formData.append('rePassword', rePassword);
         formData.append('profileImage', profileImage);
         formData.append('nidImage', nidImage);
         console.log(formData);
 
-        fetch('http://localhost:5000/learnerUser', {
-            method: 'POST',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    console.log("learner added successfully");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            })
+        registerUser(email, password, name, navigate, formData, "learnerUser");
+
+
+        // fetch('http://localhost:5000/learnerUser', {
+        //     method: 'POST',
+        //     body: formData
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         if (data.insertedId) {
+        //             console.log("learner added successfully");
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error);
+        //     })
+
     }
     return (
         <div>
+            <Navber></Navber>
+            <h1>Register for Learner</h1>
+            <p>Be a Driver User <Link to='/registerDriver'>clicking here</Link></p>
             {
                 !isLoading && <form onSubmit={handleRegisterSubmit}>
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Name"
                         name="name"
                         required
@@ -73,7 +81,7 @@ const RegisterLearner = () => {
                         variant="filled" />
                     <br />
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Email"
                         required
                         name="email"
@@ -82,35 +90,35 @@ const RegisterLearner = () => {
                         variant="filled" />
                     <br />
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Age"
                         name="age"
                         onChange={e => setAge(e.target.value)}
                         variant="filled" />
                     <br />
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Address"
                         name="address"
                         onChange={e => setAddress(e.target.value)}
                         variant="filled" />
                     <br />
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Phone"
                         name="phone"
                         onChange={e => setPhone(e.target.value)}
                         variant="filled" />
                     <br />
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Vahicle"
                         name="vehicle"
                         onChange={e => setVehicle(e.target.value)}
                         variant="filled" />
                     <br />
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Password"
                         required
                         name="password"
@@ -119,7 +127,7 @@ const RegisterLearner = () => {
                         variant="filled" />
                     <br />
                     <TextField
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         label="Re-password"
                         required
                         name="password2"
@@ -127,15 +135,17 @@ const RegisterLearner = () => {
                         onChange={e => setRePassword(e.target.value)}
                         variant="filled" />
                     <br />
+                    <p>Put your profile image</p>
                     <Input
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         accept="image/*"
                         type="file"
                         onChange={e => setProfileImage(e.target.files[0])}
                     />
                     <br />
+                    <p>Put your NID image</p>
                     <Input
-                        sx={{ width: "50%" }}
+                        sx={{ width: "50%", m: 1 }}
                         accept="image/*"
                         type="file"
                         onChange={e => setNIDImage(e.target.files[0])}

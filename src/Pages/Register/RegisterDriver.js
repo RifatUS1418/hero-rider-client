@@ -1,7 +1,8 @@
 import { TextField, Button, Input, CircularProgress, Alert } from '@mui/material';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import Navber from '../../Shared/Navber/Navber';
 
 const RegisterDriver = () => {
 
@@ -26,6 +27,12 @@ const RegisterDriver = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        if (password !== rePassword) {
+            alert('Your password did not match');
+            return;
+        }
+
+
         if (!nidImage) {
             return;
         }
@@ -45,22 +52,15 @@ const RegisterDriver = () => {
         formData.append('licenceImage', licenceImage);
         console.log(formData);
 
-        fetch('http://localhost:5000/driverUser', {
-            method: 'POST',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    console.log("driver added successfully");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            })
+
+        registerUser(email, password, name, navigate, formData, "driverUser");
+
     }
     return (
         <div>
+            <Navber></Navber>
+            <h1>Register Driver</h1>
+            <p>If you want to learn driving please register as learner by <Link to='/registerLearner'>clicking here</Link></p>
             {
                 !isLoading && <form onSubmit={handleSubmit}>
                     <TextField
@@ -140,6 +140,7 @@ const RegisterDriver = () => {
                         onChange={e => setRePassword(e.target.value)}
                         variant="filled" />
                     <br />
+                    <p>Put your profile image</p>
                     <Input
                         sx={{ width: "50%" }}
                         accept="image/*"
@@ -147,6 +148,7 @@ const RegisterDriver = () => {
                         onChange={e => setProfileImage(e.target.files[0])}
                     />
                     <br />
+                    <p>Put your NID image</p>
                     <Input
                         sx={{ width: "50%" }}
                         accept="image/*"
@@ -154,6 +156,7 @@ const RegisterDriver = () => {
                         onChange={e => setNIDImage(e.target.files[0])}
                     />
                     <br />
+                    <p>Put your licenece image</p>
                     <Input
                         sx={{ width: "50%" }}
                         accept="image/*"
