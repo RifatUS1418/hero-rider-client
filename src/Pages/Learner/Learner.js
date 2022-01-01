@@ -12,11 +12,19 @@ const Learner = () => {
     const [learners, setLearners] = useState([]);
     const [search, setSearch] = useState('');
     const [age, setAge] = useState({});
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
+    const size = 10;
     useEffect(() => {
-        fetch('http://localhost:5000/learnerUser')
+        fetch(`https://hidden-refuge-17971.herokuapp.com/learnerUser?page=${page}&&size=${size}`)
             .then(res => res.json())
-            .then(data => setLearners(data))
-    }, [])
+            .then(data => {
+                setLearners(data.learners);
+                const count = data.count;
+                const pageNumber = Math.ceil(count / size);
+                setPageCount(pageNumber);
+            })
+    }, [page])
 
     const handleSearch = e => {
         e.preventDefault();
@@ -103,6 +111,16 @@ const Learner = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <div className="pagination" style={{ margin: '30px' }}>
+                {
+                    [...Array(pageCount).keys()]
+                        .map(number => <button
+                            key={number}
+                            className={number === page ? 'selected' : ''}
+                            onClick={() => setPage(number)}
+                            style={{ marginRight: "20px", padding: "10px" }}>{number + 1}</button>)
+                }
+            </div>
         </div>
     );
 };

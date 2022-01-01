@@ -1,8 +1,9 @@
 import { Button, Card, CardContent, CardMedia, Container, Grid, Typography } from '@mui/material';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Package = ({ service }) => {
-    const { name, price, img } = service;
+    const { _id, name, price, img } = service;
     return (
         <Grid item xs={4} sm={4} md={6} >
             <Card sx={{ minWidth: 275, border: 0, boxShadow: 1 }}>
@@ -20,7 +21,7 @@ const Package = ({ service }) => {
                         {price}
                     </Typography>
                 </CardContent>
-                <Button sx={{ margin: "20px" }} variant="contained">Payment</Button>
+                <Link to={`/payment/${_id}`}><Button sx={{ margin: "20px" }} variant="contained">Payment</Button></Link>
             </Card>
         </Grid>
     );

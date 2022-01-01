@@ -8,17 +8,26 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Navber from '../../Shared/Navber/Navber';
 import { Button, TextField } from '@mui/material';
+import './Driver.css';
 
 const Driver = () => {
     const [drivers, setDrivers] = useState([]);
     const [search, setSearch] = useState('');
     const [age, setAge] = useState({});
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
+    const size = 10;
     // console.log(search)
     useEffect(() => {
-        fetch('http://localhost:5000/driveUser')
+        fetch(`https://hidden-refuge-17971.herokuapp.com/driveUser?page=${page}&&size=${size}`)
             .then(res => res.json())
-            .then(data => setDrivers(data))
-    }, [])
+            .then(data => {
+                setDrivers(data.driver);
+                const count = data.count;
+                const pageNumber = Math.ceil(count / size);
+                setPageCount(pageNumber);
+            });
+    }, [page])
 
     const handleSearch = e => {
         e.preventDefault();
@@ -108,6 +117,16 @@ const Driver = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <div className="pagination" style={{ margin: '30px' }}>
+                {
+                    [...Array(pageCount).keys()]
+                        .map(number => <button
+                            key={number}
+                            className={number === page ? 'selected' : ''}
+                            onClick={() => setPage(number)}
+                            style={{ marginRight: "20px", padding: "10px" }}>{number + 1}</button>)
+                }
+            </div>
         </div>
     );
 };

@@ -10,6 +10,7 @@ import MakeAdmin from './MakeAdmin/MakeAdmin';
 import AdminRoute from './Pages/AdminRoute/AdminRoute';
 import Driver from './Pages/Driver/Driver';
 import Learner from './Pages/Learner/Learner';
+import Payment from './Pages/Payment/Payment';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path='/registerDriver' element={<RegisterDriver />}></Route>
             <Route path='/registerLearner' element={<RegisterLearner />}></Route>
             <Route path='/login' element={<Login />}></Route>
+            <Route path='/payment/:serviceId' element={<Payment />}></Route>
             <Route path='/makeAdmin' element={
               <AdminRoute>
                 <MakeAdmin />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Alert } from '@mui/material';
+import Navber from '../Shared/Navber/Navber';
 
 const MakeAdmin = () => {
     const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const MakeAdmin = () => {
     }
     const handleAdminSubmit = e => {
         const user = { email };
-        fetch('http://localhost:5000/driverUser', {
+        fetch('https://hidden-refuge-17971.herokuapp.com/driverUser', {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -28,6 +29,7 @@ const MakeAdmin = () => {
     }
     return (
         <div>
+            <Navber></Navber>
             <h2>Make an Admin</h2>
             <form onSubmit={handleAdminSubmit}>
                 <TextField

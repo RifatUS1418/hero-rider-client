@@ -25,7 +25,7 @@ const useFirebase = () => {
                 setUser(newUser);
 
                 // save to database
-                fetch(`http://localhost:5000/${users}`, {
+                fetch(`https://hidden-refuge-17971.herokuapp.com/${users}`, {
                     method: 'POST',
                     body: formData
                 })
@@ -87,7 +87,7 @@ const useFirebase = () => {
     }, [auth]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/driverUser/${user.email}`)
+        fetch(`https://hidden-refuge-17971.herokuapp.com/driverUser/${user.email}`)
             .then(res => res.json())
             .then(data => setAdmin(data.admin))
     }, [user.email])

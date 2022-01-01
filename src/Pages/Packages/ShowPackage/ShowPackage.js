@@ -6,8 +6,9 @@ const ShowPackage = () => {
     const { user } = useAuth();
     console.log(user);
     const [showPackage, setShowPackage] = useState({});
+    console.log(showPackage);
     useEffect(() => {
-        fetch(`http://localhost:5000/learnerUser/${user.email}`)
+        fetch(`https://hidden-refuge-17971.herokuapp.com/learnerUser/${user.email}`)
             .then(res => res.json())
             .then(data => setShowPackage(data))
     }, [])
