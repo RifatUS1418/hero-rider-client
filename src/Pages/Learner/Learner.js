@@ -11,6 +11,7 @@ import { Button, TextField } from '@mui/material';
 const Learner = () => {
     const [learners, setLearners] = useState([]);
     const [search, setSearch] = useState('');
+    const [age, setAge] = useState({});
     useEffect(() => {
         fetch('http://localhost:5000/learnerUser')
             .then(res => res.json())
@@ -24,8 +25,24 @@ const Learner = () => {
         console.log(searchingData);
         setLearners(searchingData);
         setSearch('')
+    }
+    const handleOnBlur = e => {
+        const field = e.target.name;
+        const value = e.target.value;
+        const newAgeData = { ...age };
+        newAgeData[field] = value;
+        console.log(newAgeData);
+        setAge(newAgeData);
+    }
+
+    const handleByAgeSearch = e => {
+        e.preventDefault();
+        const searchingData = learners.filter(learner => (learner.age >= age.minimum_age && learner.age <= age.maximum_age));
+        // console.log(searchingData);
+        setLearners(searchingData);
 
     }
+
     return (
         <div>
             <Navber></Navber>
@@ -40,6 +57,24 @@ const Learner = () => {
                     sx={{ padding: "15px", m: 1 }}
                     variant="contained"
                     type="submit">Serach</Button>
+            </form>
+            <form onSubmit={handleByAgeSearch}>
+                <TextField
+                    sx={{ width: "30%", m: 1 }}
+                    label="Search"
+                    name="minimum_age"
+                    onBlur={handleOnBlur}
+                    variant="outlined" />
+                <TextField
+                    sx={{ width: "30%", m: 1 }}
+                    label="Search"
+                    name="maximum_age"
+                    onBlur={handleOnBlur}
+                    variant="outlined" />
+                <Button
+                    sx={{ padding: "15px", m: 1 }}
+                    variant="contained"
+                    type="submit">Serach By Age</Button>
             </form>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
